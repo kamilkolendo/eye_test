@@ -6,7 +6,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC # <- fajnie
 
 from collections import namedtuple
-Level = namedtuple("Level", ['name', 'value']) # <-niezmienialne odpowiedniki list
+level = namedtuple("level", ['name', 'value']) # <-niezmienialne odpowiedniki list
 
 from enum import Enum
 
@@ -14,8 +14,8 @@ class EyeGamePage:
 
     url = "https://www.igame.com/eye-test/"
 
-    ROBOT = Level(name='ROBOT', value=30)
-    JASTRZAB = Level(name='JASTRZĄB', value=25)
+    ROBOT = level(name='ROBOT', value=30)
+    JASTRZAB = level(name='JASTRZĄB', value=25)
 
 
     def __init__(self, driver : WebDriver):
@@ -29,8 +29,8 @@ class EyeGamePage:
         #self.driver.find_element_by_css_selector('.thechosenone').click()
         self.driver.find_element(By.CSS_SELECTOR, '.thechosenone').click()
 
-    def get_to_level(self, number_of_clicks):
-        for i in range(number_of_clicks):
+    def get_to_level(self, level):
+        for i in range(level.value):
             self.click_chosen_one()
         WebDriverWait(self.driver, 20).until(EC.invisibility_of_element_located((By.ID, "timeleft")))
 
@@ -39,3 +39,6 @@ class EyeGamePage:
 
     def get_reached_level(self):
         return self.driver.find_element(By.CSS_SELECTOR, '.character-title').text
+
+    def check_level_reached(self):
+        assert self.driver.find_element(By.CSS_SELECTOR, '.character-title').text == level.name

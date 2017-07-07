@@ -8,5 +8,6 @@ def test_kret_level():
     eye_game.load()
     #eye_game.click_chosen_one()
     eye_game.get_to_level(30)
-    assert eye_game.get_reached_level() == "ROBOT"
+    eye_game.check_level_reached()
+    #assert eye_game.get_reached_level() == "ROBOT"
     driver.close()
