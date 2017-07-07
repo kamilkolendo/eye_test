@@ -5,18 +5,9 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC # <- fajnie
 
-from collections import namedtuple
-level = namedtuple("level", ['name', 'value']) # <-niezmienialne odpowiedniki list
-
-from enum import Enum
-
 class EyeGamePage:
 
     url = "https://www.igame.com/eye-test/"
-
-    ROBOT = level(name='ROBOT', value=30)
-    JASTRZAB = level(name='JASTRZĄB', value=25)
-
 
     def __init__(self, driver : WebDriver):
         self.driver = driver
@@ -40,5 +31,5 @@ class EyeGamePage:
     def get_reached_level(self):
         return self.driver.find_element(By.CSS_SELECTOR, '.character-title').text
 
-    def check_level_reached(self):
+    def check_level_reached(self, level):
         assert self.driver.find_element(By.CSS_SELECTOR, '.character-title').text == level.name
